@@ -1,0 +1,68 @@
+<div class="splash" [class.splash--visible]="visible()">
+  <div class="splash__language">
+    <app-language-picker></app-language-picker>
+    <button class="logout-btn" (click)="logout()">{{ language.t('login.logout') }}</button>
+  </div>
+
+  <!-- Fondo con partículas decorativas -->
+  <div class="splash__bg">
+    <span class="dot dot--1"></span>
+    <span class="dot dot--2"></span>
+    <span class="dot dot--3"></span>
+    <span class="dot dot--4"></span>
+    <span class="dot dot--5"></span>
+    <span class="dot dot--6"></span>
+  </div>
+
+  <!-- Contenido principal -->
+  <div class="splash__content">
+
+    <!-- Icono / logo -->
+    <div class="splash__icon">
+      <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="32" cy="28" r="18" stroke="currentColor" stroke-width="2.5" />
+        <path d="M32 10 C22 10 14 14 14 18 C14 22 22 26 32 26 C42 26 50 22 50 18 C50 14 42 10 32 10Z"
+          stroke="currentColor" stroke-width="1.5" fill="none" opacity="0.5" />
+        <ellipse cx="32" cy="28" rx="8" ry="18" stroke="currentColor" stroke-width="1.5" opacity="0.7" />
+        <path d="M14 28 Q32 35 50 28" stroke="currentColor" stroke-width="1.5" fill="none" opacity="0.5" />
+        <path d="M32 44 L32 58" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" />
+        <circle cx="32" cy="60" r="3" fill="currentColor" />
+      </svg>
+    </div>
+
+    <!-- Título -->
+    <h1 class="splash__title">GeoVista</h1>
+    <p class="splash__subtitle">{{ language.t('home.subtitle') }}</p>
+    <p class="splash__description">
+      {{ language.t('home.description') }}
+    </p>
+
+    <!-- Botones de acceso -->
+    <div class="splash__actions">
+      <button class="btn btn--primary" (click)="goToMaps()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M3 7l6-3 6 3 6-3v13l-6 3-6-3-6 3V7z" />
+          <path d="M9 4v13M15 7v13" />
+        </svg>
+        {{ language.t('home.exploreMaps') }}
+      </button>
+      <button class="btn btn--secondary" (click)="goToArgis()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polygon
+            points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+        </svg>
+        {{ language.t('home.argisAnalysis') }}
+      </button>
+    </div>
+
+    <!-- Badge tecnología -->
+    <div class="splash__tech">
+      <span>Angular 20</span>
+      <span class="sep">·</span>
+      <span>Leaflet</span>
+      <span class="sep">·</span>
+      <span>OpenStreetMap</span>
+    </div>
+  </div>
+
+</div>

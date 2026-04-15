@@ -1,0 +1,130 @@
+<main class="login-shell">
+  <div class="login-image-backdrop" aria-hidden="true"></div>
+  <div class="login-bg login-bg--a"></div>
+  <div class="login-bg login-bg--b"></div>
+
+  <div class="login-toolbar">
+    <app-language-picker></app-language-picker>
+    <app-theme-picker></app-theme-picker>
+  </div>
+
+  <div class="login-layout">
+    <section class="login-brand-panel">
+      <p class="login-badge">GeoVista Platform</p>
+      <h1>{{ language.t('login.title') }}</h1>
+      <p class="login-subtitle">{{ language.t('login.subtitle') }}</p>
+
+      <ul class="login-features">
+        <li>Mapas interactivos con capas y busquedas geograficas.</li>
+        <li>Analisis Argis y visualizacion 3D integrada.</li>
+        <li>Acceso seguro con sesion unificada.</li>
+      </ul>
+    </section>
+
+    <section class="login-form-panel card">
+      <div class="card-body">
+        <h2 class="login-form-title">{{ language.t('login.submit') }}</h2>
+
+        <form (ngSubmit)="onSubmit()" class="grid gap-3" autocomplete="on">
+          <label class="form-control w-full">
+            <div class="label py-1.5">
+              <span class="label-text login-label">{{ language.t('login.user') }}</span>
+            </div>
+            <input
+              type="text"
+              class="input input-bordered w-full login-input login-input--outlined"
+              [ngModel]="username()"
+              (ngModelChange)="username.set($event)"
+              name="username"
+              autocomplete="username"
+              required
+            />
+          </label>
+
+          <label class="form-control w-full">
+            <div class="label py-1.5">
+              <span class="label-text login-label">{{ language.t('login.password') }}</span>
+            </div>
+            <input
+              type="password"
+              class="input input-bordered w-full login-input login-input--outlined"
+              [ngModel]="password()"
+              (ngModelChange)="password.set($event)"
+              name="password"
+              autocomplete="current-password"
+              required
+            />
+          </label>
+
+          @if (error()) {
+            <div role="alert" class="alert alert-error py-2 text-sm">
+              <span>{{ error() }}</span>
+            </div>
+          }
+
+            <button class="btn btn-primary mt-3 login-submit" type="submit" [disabled]="isSubmitting()">
+            @if (isSubmitting()) {
+              <span class="loading loading-spinner loading-xs"></span>
+            }
+            {{ language.t('login.submit') }}
+          </button>
+        </form>
+
+        <div class="login-divider">{{ language.t('login.registerTitle') }}</div>
+
+        <form (ngSubmit)="onRegister()" class="grid gap-3" autocomplete="off">
+          <label class="form-control w-full">
+            <div class="label py-1.5">
+              <span class="label-text login-label">{{ language.t('login.registerUser') }}</span>
+            </div>
+            <input
+              type="text"
+              class="input input-bordered w-full login-input"
+              [ngModel]="registerUsername()"
+              (ngModelChange)="registerUsername.set($event)"
+              name="registerUsername"
+              autocomplete="off"
+              required
+            />
+          </label>
+
+          <label class="form-control w-full">
+            <div class="label py-1.5">
+              <span class="label-text login-label">{{ language.t('login.registerPassword') }}</span>
+            </div>
+            <input
+              type="password"
+              class="input input-bordered w-full login-input"
+              [ngModel]="registerPassword()"
+              (ngModelChange)="registerPassword.set($event)"
+              name="registerPassword"
+              autocomplete="new-password"
+              required
+            />
+          </label>
+
+          @if (registerError()) {
+            <div role="alert" class="alert alert-error py-2 text-sm">
+              <span>{{ registerError() }}</span>
+            </div>
+          }
+
+          @if (registerMessage()) {
+            <div role="status" class="alert alert-success py-2 text-sm">
+              <span>{{ registerMessage() }}</span>
+            </div>
+          }
+
+          <button class="btn btn-outline mt-1 login-submit" type="submit" [disabled]="isRegisterSubmitting()">
+            @if (isRegisterSubmitting()) {
+              <span class="loading loading-spinner loading-xs"></span>
+            }
+            {{ language.t('login.registerButton') }}
+          </button>
+        </form>
+
+        <div class="login-hint">{{ language.t('login.hint') }}</div>
+      </div>
+    </section>
+  </div>
+</main>

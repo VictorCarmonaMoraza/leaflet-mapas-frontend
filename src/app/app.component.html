@@ -1,0 +1,20 @@
+<!-- Spinner de carga de rutas -->
+@if (loading()) {
+  <div class="app-loading-overlay">
+    <div class="app-spinner">
+      <div class="spinner-ring"></div>
+      <div class="spinner-ring spinner-ring--2"></div>
+      <div class="spinner-ring spinner-ring--3"></div>
+      <svg class="spinner-globe" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="32" cy="32" r="18" stroke="currentColor" stroke-width="2"/>
+        <ellipse cx="32" cy="32" rx="8" ry="18" stroke="currentColor" stroke-width="1.5" opacity="0.6"/>
+        <path d="M14 32 Q32 38 50 32" stroke="currentColor" stroke-width="1.5" fill="none" opacity="0.6"/>
+        <path d="M14 24 Q32 30 50 24" stroke="currentColor" stroke-width="1" fill="none" opacity="0.4"/>
+        <path d="M14 40 Q32 46 50 40" stroke="currentColor" stroke-width="1" fill="none" opacity="0.4"/>
+      </svg>
+    </div>
+    <p class="app-loading-text">{{ language.t('common.loading') }}</p>
+  </div>
+}
+
+<router-outlet />

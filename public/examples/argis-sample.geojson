@@ -1,0 +1,33 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Zona Demo Madrid"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-3.755, 40.445],
+            [-3.68, 40.445],
+            [-3.68, 40.39],
+            [-3.755, 40.39],
+            [-3.755, 40.445]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Punto Demo"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-3.7038, 40.4168]
+      }
+    }
+  ]
+}

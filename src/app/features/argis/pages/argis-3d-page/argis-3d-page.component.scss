@@ -1,0 +1,98 @@
+@import url('https://unpkg.com/maplibre-gl@5.8.0/dist/maplibre-gl.css');
+
+:host {
+  display: block;
+}
+
+.app-shell {
+  min-height: 100dvh;
+}
+
+.app-navbar {
+  background: linear-gradient(120deg, var(--navbar-start), var(--navbar-end));
+  border-bottom: 1px solid rgba(148, 163, 184, 0.28);
+  box-shadow: 0 12px 28px rgba(11, 31, 74, 0.22);
+}
+
+.app-navbar h1,
+.app-navbar p {
+  color: var(--navbar-text);
+}
+
+.app-navbar__inner {
+  flex-wrap: wrap;
+}
+
+.app-navbar__nav {
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.nav-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.75rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 0.75rem;
+  border: 1px solid var(--nav-link-border);
+  color: var(--nav-link-color);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--nav-link-bg) 78%, #ffffff 22%) 0%, var(--nav-link-bg) 100%);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+.active-nav {
+  color: var(--nav-active-color);
+  background: linear-gradient(180deg, #ffffff 0%, color-mix(in srgb, var(--nav-active-bg) 92%, #eef2ff 8%) 100%);
+  border-color: color-mix(in srgb, var(--nav-active-bg) 78%, #cbd5e1 22%);
+}
+
+.nav-link--home {
+  color: color-mix(in srgb, var(--navbar-text) 92%, #ffffff 8%);
+}
+
+.app-main {
+  min-height: 0;
+  display: flex;
+  overflow: hidden;
+}
+
+.app-panel {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.map-wrapper {
+  flex: 1 1 auto;
+  height: clamp(440px, 66dvh, 780px);
+  min-height: 0;
+}
+
+.map-canvas {
+  width: 100%;
+  height: 100%;
+}
+
+.app-footer {
+  background: var(--footer-bg);
+  border-top: 1px solid rgba(148, 163, 184, 0.24);
+  color: var(--footer-text);
+}
+
+@media (max-width: 768px) {
+  .app-navbar__brand,
+  .app-navbar__nav {
+    width: 100%;
+  }
+
+  .app-navbar__nav {
+    justify-content: flex-start;
+  }
+
+  .map-wrapper {
+    height: 54dvh;
+  }
+}

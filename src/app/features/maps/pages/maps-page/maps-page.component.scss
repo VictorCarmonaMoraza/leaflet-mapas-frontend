@@ -1,0 +1,309 @@
+:host {
+	display: block;
+}
+
+.app-shell {
+	min-height: 100dvh;
+}
+
+.app-navbar__inner {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	flex-wrap: wrap;
+	text-align: center;
+}
+
+.app-navbar__brand {
+	min-width: 0;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 0.2rem;
+	margin-bottom: 0.9rem;
+	text-align: center;
+}
+
+.app-navbar__brand h1 {
+	margin: 0;
+	width: 100%;
+	text-align: center;
+	letter-spacing: -0.035em;
+}
+
+.app-navbar__brand p {
+	margin: 0;
+	width: 100%;
+	text-align: center;
+}
+
+.app-navbar__nav {
+	flex-wrap: wrap;
+	justify-content: center;
+}
+
+.app-main {
+	min-height: 0;
+}
+
+.map-stage {
+	min-height: 100%;
+}
+
+.control-panel {
+	width: min(22rem, calc(100vw - 2rem));
+	z-index: 1200;
+}
+
+/* DEBUG: Forzar visibilidad del bloque de carga GeoJSON */
+.geojson-upload-debug {
+	border: 2px solid red !important;
+	background: yellow !important;
+	color: black !important;
+	font-weight: bold;
+}
+
+.app-navbar {
+	background: linear-gradient(120deg, var(--navbar-start), var(--navbar-end));
+	border-bottom: 1px solid rgba(148, 163, 184, 0.28);
+	box-shadow: 0 12px 28px rgba(11, 31, 74, 0.22);
+
+	h1,
+	p {
+		color: var(--navbar-text);
+	}
+
+	p {
+		opacity: 0.9;
+	}
+}
+
+.nav-link {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 2.75rem;
+	padding: 0.4rem 0.75rem;
+	border-radius: 0.75rem;
+	border: 1px solid var(--nav-link-border);
+	color: var(--nav-link-color);
+	background: linear-gradient(180deg, color-mix(in srgb, var(--nav-link-bg) 78%, #ffffff 22%) 0%, var(--nav-link-bg) 100%);
+	font-size: 0.85rem;
+	font-weight: 700;
+	letter-spacing: 0.01em;
+	backdrop-filter: blur(10px);
+	box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12), 0 10px 22px rgba(15, 23, 42, 0.12);
+	transition: background-color 180ms ease, transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+}
+
+.nav-link:hover {
+	background: var(--nav-link-hover-bg);
+	transform: translateY(-1px);
+	box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18), 0 12px 26px rgba(15, 23, 42, 0.18);
+}
+
+.nav-link:focus-visible {
+	outline: none;
+	box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 26%, transparent), inset 0 1px 0 rgba(255, 255, 255, 0.18), 0 12px 26px rgba(15, 23, 42, 0.18);
+}
+
+.active-nav {
+	color: var(--nav-active-color);
+	background: linear-gradient(180deg, #ffffff 0%, color-mix(in srgb, var(--nav-active-bg) 92%, #eef2ff 8%) 100%);
+	border-color: color-mix(in srgb, var(--nav-active-bg) 78%, #cbd5e1 22%);
+	box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.94), 0 14px 28px rgba(15, 23, 42, 0.18);
+}
+
+.nav-link--home {
+	color: color-mix(in srgb, var(--navbar-text) 92%, #ffffff 8%);
+	border-color: color-mix(in srgb, var(--nav-link-border) 45%, rgba(255, 255, 255, 0.32) 55%);
+	background: linear-gradient(180deg, rgba(255, 255, 255, 0.14) 0%, rgba(255, 255, 255, 0.07) 100%);
+
+	&:hover {
+		background: linear-gradient(180deg, rgba(255, 255, 255, 0.22) 0%, rgba(255, 255, 255, 0.1) 100%);
+		border-color: rgba(255, 255, 255, 0.42);
+	}
+}
+
+.app-footer {
+	background: var(--footer-bg);
+	border-top: 1px solid rgba(148, 163, 184, 0.24);
+	color: var(--footer-text);
+	letter-spacing: 0.02em;
+}
+
+/* Fondo principal y superficies */
+.bg-gray-50 {
+	background-color: var(--app-bg);
+}
+
+.bg-white,
+.bg-white\/95 {
+	background-color: var(--surface);
+}
+
+.border-gray-200,
+.border-gray-300 {
+	border-color: var(--border-soft);
+}
+
+/* Tipografia */
+.text-gray-900 {
+	color: var(--text-main);
+}
+
+.text-gray-700,
+.text-gray-600,
+.text-gray-500,
+.text-gray-400 {
+	color: var(--text-muted);
+}
+
+/* Botones primarios (zoom y guardar nota) */
+.bg-blue-500 {
+	background-color: var(--primary);
+}
+
+.hover\:bg-blue-600:hover {
+	background-color: var(--primary-hover);
+}
+
+/* Boton capas */
+.bg-indigo-500 {
+	background-color: var(--secondary);
+}
+
+.hover\:bg-indigo-600:hover,
+.bg-indigo-600 {
+	background-color: var(--secondary-hover);
+}
+
+.bg-indigo-600 {
+	border: 1px solid color-mix(in srgb, var(--secondary-hover) 72%, #000 28%);
+	box-shadow: 0 0 0 2px color-mix(in srgb, var(--secondary-hover) 22%, transparent);
+}
+
+/* Botones de ciudades */
+.bg-green-500 {
+	background-color: var(--success);
+}
+
+.hover\:bg-green-600:hover {
+	background-color: var(--success-hover);
+}
+
+/* Opciones inactivas del selector de capa */
+.bg-gray-100 {
+	background-color: #eef3f9;
+}
+
+.hover\:bg-gray-200:hover {
+	background-color: #e2e8f0;
+}
+
+/* Tarjetas de notas */
+.bg-yellow-50 {
+	background-color: #eef6ff;
+}
+
+.border-yellow-200 {
+	border-color: #c7daf8;
+}
+
+.hover\:bg-yellow-100:hover {
+	background-color: #e4f0ff;
+}
+
+/* Panel y modal */
+.shadow-xl,
+.shadow-2xl,
+.shadow-md,
+.shadow-lg {
+	box-shadow: var(--panel-shadow);
+}
+
+.bg-black\/50 {
+	background-color: var(--overlay);
+}
+
+.note-modal-card {
+	position: fixed;
+	touch-action: none;
+}
+
+@media (max-width: 1024px) {
+	.control-panel {
+		width: min(20rem, calc(100vw - 2rem));
+	}
+}
+
+@media (max-width: 768px) {
+	.app-navbar__inner {
+		padding: 1rem;
+		align-items: center;
+	}
+
+	.app-navbar__brand,
+	.app-navbar__nav {
+		width: 100%;
+	}
+
+	.app-navbar__nav {
+		justify-content: center;
+	}
+
+	.app-navbar h1 {
+		font-size: 1.75rem;
+	}
+
+	.app-main {
+		display: flex;
+		flex-direction: column;
+		padding: 1rem;
+		gap: 1rem;
+	}
+
+	.map-stage {
+		position: relative;
+		inset: auto;
+		order: 2;
+		min-height: 52dvh;
+		border-radius: 1rem;
+		overflow: hidden;
+	}
+
+	.control-panel {
+		position: relative;
+		top: auto;
+		left: auto;
+		order: 1;
+		width: 100%;
+		max-height: none;
+	}
+
+	.app-footer > div {
+		padding-inline: 1rem;
+	}
+
+	.app-modal > div {
+		max-width: 100%;
+	}
+	}
+
+@media (max-width: 540px) {
+	.nav-link {
+		font-size: 0.78rem;
+		padding: 0.42rem 0.65rem;
+	}
+
+	.app-navbar p {
+		font-size: 0.82rem;
+	}
+
+	.map-stage {
+		min-height: 46dvh;
+	}
+}

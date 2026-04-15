@@ -1,0 +1,158 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import 'leaflet/dist/leaflet.css';
+
+/* 🔧 FIX: cerrar correctamente el bloque */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+/* Tailwind apply */
+body {
+  @apply antialiased;
+}
+
+/* Leaflet */
+.leaflet-container {
+  font-family: inherit;
+}
+
+/* =========================
+   🎨 THEMES
+========================= */
+
+:root, [data-theme="blue"] {
+  --app-bg:        #f4f7fb;
+  --surface:       #ffffff;
+  --border-soft:   #d9e2ec;
+  --text-main:     #0f172a;
+  --text-muted:    #475569;
+  --primary:       #1d4ed8;
+  --primary-hover: #1e40af;
+  --secondary:     #0ea5a4;
+  --secondary-hover: #0f8f8e;
+  --success:       #16a34a;
+  --success-hover: #15803d;
+  --navbar-start:  #0b1f4a;
+  --navbar-end:    #1d4ed8;
+  --navbar-text:   #f8fafc;
+  --footer-bg:     #0f172a;
+  --footer-text:   #cbd5e1;
+  --panel-shadow:  0 10px 30px rgba(15,23,42,0.12);
+  --nav-link-color:       #dbeafe;
+  --nav-link-bg:          rgba(255,255,255,0.08);
+  --nav-link-border:      rgba(203,213,225,0.45);
+  --nav-link-hover-bg:    rgba(255,255,255,0.18);
+  --nav-active-color:     #0f172a;
+  --nav-active-bg:        #ffffff;
+}
+
+[data-theme="dark"] {
+  --app-bg:        #0f172a;
+  --surface:       #1e293b;
+  --border-soft:   #334155;
+  --text-main:     #f1f5f9;
+  --text-muted:    #94a3b8;
+  --primary:       #38bdf8;
+  --primary-hover: #0ea5e9;
+  --secondary:     #818cf8;
+  --secondary-hover: #6366f1;
+  --success:       #22c55e;
+  --success-hover: #16a34a;
+  --navbar-start:  #020617;
+  --navbar-end:    #0f172a;
+  --navbar-text:   #e2e8f0;
+  --footer-bg:     #020617;
+  --footer-text:   #64748b;
+  --panel-shadow:  0 10px 30px rgba(0,0,0,0.45);
+  --nav-link-color:       #bae6fd;
+  --nav-link-bg:          rgba(255,255,255,0.06);
+  --nav-link-border:      rgba(148,163,184,0.3);
+  --nav-link-hover-bg:    rgba(255,255,255,0.12);
+  --nav-active-color:     #0f172a;
+  --nav-active-bg:        #38bdf8;
+}
+
+[data-theme="emerald"] {
+  --app-bg:        #f0fdf4;
+  --surface:       #ffffff;
+  --border-soft:   #bbf7d0;
+  --text-main:     #052e16;
+  --text-muted:    #166534;
+  --primary:       #059669;
+  --primary-hover: #047857;
+  --secondary:     #0d9488;
+  --secondary-hover: #0f766e;
+  --success:       #16a34a;
+  --success-hover: #15803d;
+  --navbar-start:  #022c22;
+  --navbar-end:    #059669;
+  --navbar-text:   #f0fdf4;
+  --footer-bg:     #052e16;
+  --footer-text:   #86efac;
+  --panel-shadow:  0 10px 30px rgba(5,46,22,0.15);
+  --nav-link-color:       #bbf7d0;
+  --nav-link-bg:          rgba(255,255,255,0.08);
+  --nav-link-border:      rgba(134,239,172,0.4);
+  --nav-link-hover-bg:    rgba(255,255,255,0.18);
+  --nav-active-color:     #052e16;
+  --nav-active-bg:        #ffffff;
+}
+
+[data-theme="purple"] {
+  --app-bg:        #faf5ff;
+  --surface:       #ffffff;
+  --border-soft:   #e9d5ff;
+  --text-main:     #2e1065;
+  --text-muted:    #6b21a8;
+  --primary:       #7c3aed;
+  --primary-hover: #6d28d9;
+  --secondary:     #c026d3;
+  --secondary-hover: #a21caf;
+  --success:       #16a34a;
+  --success-hover: #15803d;
+  --navbar-start:  #1e0a3c;
+  --navbar-end:    #7c3aed;
+  --navbar-text:   #f5f3ff;
+  --footer-bg:     #2e1065;
+  --footer-text:   #d8b4fe;
+  --panel-shadow:  0 10px 30px rgba(46,16,101,0.15);
+  --nav-link-color:       #e9d5ff;
+  --nav-link-bg:          rgba(255,255,255,0.08);
+  --nav-link-border:      rgba(216,180,254,0.4);
+  --nav-link-hover-bg:    rgba(255,255,255,0.18);
+  --nav-active-color:     #2e1065;
+  --nav-active-bg:        #ffffff;
+}
+
+[data-theme="crimson"] {
+  --app-bg:        #fff1f2;
+  --surface:       #ffffff;
+  --border-soft:   #fecdd3;
+  --text-main:     #4c0519;
+  --text-muted:    #9f1239;
+  --primary:       #be123c;
+  --primary-hover: #9f1239;
+  --secondary:     #ea580c;
+  --secondary-hover: #c2410c;
+  --success:       #16a34a;
+  --success-hover: #15803d;
+  --navbar-start:  #3b0011;
+  --navbar-end:    #be123c;
+  --navbar-text:   #fff1f2;
+  --footer-bg:     #4c0519;
+  --footer-text:   #fda4af;
+  --panel-shadow:  0 10px 30px rgba(76,5,25,0.15);
+  --nav-link-color:       #fecdd3;
+  --nav-link-bg:          rgba(255,255,255,0.08);
+  --nav-link-border:      rgba(253,164,175,0.4);
+  --nav-link-hover-bg:    rgba(255,255,255,0.18);
+  --nav-active-color:     #4c0519;
+  --nav-active-bg:        #ffffff;
+}

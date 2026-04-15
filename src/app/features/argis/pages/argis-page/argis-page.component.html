@@ -1,0 +1,229 @@
+<div class="app-shell w-full min-h-dvh flex flex-col bg-gray-50">
+  <header class="app-navbar z-10 flex-shrink-0">
+    <div class="app-navbar__inner px-6 py-4 flex items-center justify-between gap-4">
+      <div class="app-navbar__brand">
+        <h1 class="text-3xl font-bold">{{ title() }}</h1>
+        <p class="text-sm">{{ language.t('argis.headerDescription') }}</p>
+      </div>
+
+      <nav class="app-navbar__nav flex items-center gap-2">
+        <a
+          routerLink="/home"
+          class="nav-link nav-link--home"
+          [title]="language.t('maps.backHomeTitle')"
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16" style="display:inline;vertical-align:middle;margin-right:4px">
+            <path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V9.5z"/>
+            <path d="M9 21V12h6v9"/>
+          </svg>
+          {{ language.t('common.home') }}
+        </a>
+        <a
+          routerLink="/maps"
+          routerLinkActive="active-nav"
+          class="nav-link"
+        >
+          {{ language.t('common.maps') }}
+        </a>
+        <a
+          routerLink="/argis"
+          routerLinkActive="active-nav"
+          class="nav-link"
+        >
+          {{ language.t('common.argis') }}
+        </a>
+        <app-language-picker></app-language-picker>
+        <app-theme-picker></app-theme-picker>
+      </nav>
+    </div>
+  </header>
+
+  <main class="app-main flex-1 p-4 md:p-6">
+    <section class="app-panel bg-white rounded-xl shadow-xl border border-gray-200 p-4 h-full flex flex-col gap-4">
+      <div class="toolbar-row flex flex-col md:flex-row md:items-center gap-3 md:justify-between">
+        <div class="toolbar-actions flex items-center gap-2 flex-wrap">
+          <label class="inline-flex items-center gap-2 px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg text-sm font-semibold cursor-pointer w-fit" [class.opacity-60]="isLoading()" [class.pointer-events-none]="isLoading()">
+            {{ language.t('argis.uploadShapefile') }}
+            <input
+              type="file"
+              accept=".zip,.shp,.dbf,.shx,.prj,.cpg"
+              multiple
+              (change)="onFileSelected($event)"
+              class="hidden"
+            />
+          </label>
+
+          <button
+            type="button"
+            (click)="loadExampleLayer()"
+            class="inline-flex items-center gap-2 px-4 py-2 bg-indigo-500 hover:bg-indigo-600 text-white rounded-lg text-sm font-semibold disabled:opacity-60 disabled:cursor-not-allowed"
+            [disabled]="isLoading()"
+          >
+            {{ language.t('argis.loadExample') }}
+          </button>
+
+          <button
+            type="button"
+            (click)="toggleAutonomousCommunities()"
+            [class]="communitiesVisible()
+              ? 'inline-flex items-center gap-2 px-4 py-2 bg-orange-600 hover:bg-orange-700 text-white rounded-lg text-sm font-semibold disabled:opacity-60 disabled:cursor-not-allowed'
+              : 'inline-flex items-center gap-2 px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-sm font-semibold disabled:opacity-60 disabled:cursor-not-allowed'"
+            [disabled]="isLoading()"
+          >
+            {{ communitiesVisible() ? language.t('argis.hideCcaa') : language.t('argis.showCcaa') }}
+          </button>
+
+          <button
+            type="button"
+            (click)="toggleWorldCountries()"
+            [class]="worldVisible()
+              ? 'inline-flex items-center gap-2 px-4 py-2 bg-sky-700 hover:bg-sky-800 text-white rounded-lg text-sm font-semibold disabled:opacity-60 disabled:cursor-not-allowed'
+              : 'inline-flex items-center gap-2 px-4 py-2 bg-cyan-600 hover:bg-cyan-700 text-white rounded-lg text-sm font-semibold disabled:opacity-60 disabled:cursor-not-allowed'"
+            [disabled]="isLoading()"
+          >
+            {{ worldVisible() ? language.t('argis.hideWorld') : language.t('argis.showWorld') }}
+          </button>
+
+          <a
+            routerLink="/argis/3d"
+            class="inline-flex items-center gap-2 px-4 py-2 bg-slate-700 hover:bg-slate-800 text-white rounded-lg text-sm font-semibold"
+          >
+            {{ language.t('argis.open3d') }}
+          </a>
+        </div>
+
+        <p class="text-sm text-gray-600">{{ language.t('argis.acceptedFormats') }}</p>
+      </div>
+
+      <div class="search-row grid gap-2 md:grid-cols-[1fr_auto] md:items-center">
+        <div class="search-controls flex items-start gap-2">
+          <div #townSearchBox class="argis-search-box relative flex-1">
+            <input
+              type="text"
+              [ngModel]="townQuery()"
+              (ngModelChange)="onTownQueryChange($event)"
+              (keyup.enter)="searchTown()"
+              [placeholder]="language.t('argis.searchPlaceholder')"
+              class="w-full border border-gray-300 rounded-lg px-3 py-2 pr-8 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+            />
+
+            @if (townQuery()) {
+              <button
+                type="button"
+                (click)="clearTownQuery()"
+                class="argis-search-clear"
+              >
+                ✕
+              </button>
+            }
+
+            @if (townResults().length > 0) {
+              <ul class="town-autocomplete-list">
+                @for (town of townResults(); track town.lat + '-' + town.lon + '-' + town.display_name) {
+                  <li>
+                    <button
+                      type="button"
+                      (click)="selectTownSuggestion(town)"
+                      class="town-autocomplete-item"
+                      [title]="town.display_name"
+                    >
+                      📍 {{ town.display_name }}
+                    </button>
+                  </li>
+                }
+              </ul>
+            }
+          </div>
+
+          <button
+            type="button"
+            (click)="searchTown()"
+            class="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg text-sm font-semibold whitespace-nowrap disabled:opacity-60 disabled:cursor-not-allowed"
+            [disabled]="isLoading()"
+          >
+            {{ language.t('common.search') }}
+          </button>
+        </div>
+      </div>
+
+      @if (isSearching()) {
+        <p class="text-sm text-blue-600 animate-pulse">{{ language.t('maps.searching') }}</p>
+      }
+      @if (searchError() && !isSearching()) {
+        <p class="text-sm text-red-600">{{ searchError() }}</p>
+      }
+
+      <p class="text-sm text-gray-600">{{ status() }}</p>
+      @if (error()) {
+        <p class="text-sm text-red-600">{{ error() }}</p>
+      }
+      @if (isLoading()) {
+        <p class="text-sm text-blue-600 animate-pulse">{{ language.t('argis.loadingLayer') }}</p>
+      }
+
+      @if (worldVisible()) {
+        <div class="flex items-center gap-3 flex-wrap text-xs font-semibold">
+          <span class="text-gray-500 mr-1">{{ language.t('argis.legend') }}</span>
+          <span class="flex items-center gap-1.5"><span class="inline-block w-3.5 h-3.5 rounded-sm border" style="background:#f59e0b;border-color:#b45309"></span>{{ language.t('argis.africa') }}</span>
+          <span class="flex items-center gap-1.5"><span class="inline-block w-3.5 h-3.5 rounded-sm border" style="background:#ef4444;border-color:#b91c1c"></span>{{ language.t('argis.asia') }}</span>
+          <span class="flex items-center gap-1.5"><span class="inline-block w-3.5 h-3.5 rounded-sm border" style="background:#3b82f6;border-color:#1d4ed8"></span>{{ language.t('argis.europe') }}</span>
+          <span class="flex items-center gap-1.5"><span class="inline-block w-3.5 h-3.5 rounded-sm border" style="background:#10b981;border-color:#047857"></span>{{ language.t('argis.northAmerica') }}</span>
+          <span class="flex items-center gap-1.5"><span class="inline-block w-3.5 h-3.5 rounded-sm border" style="background:#f97316;border-color:#c2410c"></span>{{ language.t('argis.southAmerica') }}</span>
+          <span class="flex items-center gap-1.5"><span class="inline-block w-3.5 h-3.5 rounded-sm border" style="background:#a855f7;border-color:#7e22ce"></span>{{ language.t('argis.oceania') }}</span>
+          <span class="flex items-center gap-1.5"><span class="inline-block w-3.5 h-3.5 rounded-sm border" style="background:#94a3b8;border-color:#475569"></span>{{ language.t('argis.antarctica') }}</span>
+        </div>
+      }
+
+      <div class="argis-content-grid flex-1">
+        <div class="map-wrapper rounded-lg overflow-hidden border border-gray-200">
+          <div #argisMap class="map-canvas w-full h-full"></div>
+          @if (isLoading()) {
+            <div class="map-loading-overlay" role="status" aria-live="polite" aria-busy="true">
+              <div class="map-loading-card">
+                <div class="map-loading-spinner"></div>
+                <p class="map-loading-title">{{ language.t('argis.loadingLayer') }}</p>
+                <p class="map-loading-subtitle">{{ status() }}</p>
+                <div class="map-loading-skeleton map-loading-skeleton--lg"></div>
+                <div class="map-loading-skeleton map-loading-skeleton--md"></div>
+                <div class="map-loading-skeleton map-loading-skeleton--sm"></div>
+              </div>
+            </div>
+          }
+        </div>
+
+        @if (selectedPlaceInfo()) {
+          <aside class="place-info-card rounded-2xl border border-gray-200 bg-white p-4 shadow-xl">
+            <div class="place-info-media">
+              <img
+                [src]="selectedPlaceInfo()!.imageUrl"
+                [alt]="language.t('argis.placeImageAlt', { place: selectedPlaceInfo()!.name })"
+              />
+            </div>
+
+            <div class="place-info-copy">
+              <p class="place-info-eyebrow">{{ language.t('argis.placeInfoTitle') }}</p>
+              <h3 class="place-info-name">{{ selectedPlaceInfo()!.name }}</h3>
+              <p class="place-info-subtitle">{{ selectedPlaceInfo()!.displayName }}</p>
+
+              @if (isPlaceInfoLoading()) {
+                <p class="text-sm text-blue-600 animate-pulse">{{ language.t('common.loading') }}</p>
+              }
+
+              <p class="place-info-description">{{ selectedPlaceInfo()!.description }}</p>
+
+              <div class="place-info-meta">
+                <span class="place-info-meta-label">{{ language.t('argis.placeCoordinates') }}</span>
+                <p>Lat: {{ selectedPlaceInfo()!.lat.toFixed(5) }}</p>
+                <p>Lng: {{ selectedPlaceInfo()!.lng.toFixed(5) }}</p>
+              </div>
+            </div>
+          </aside>
+        }
+      </div>
+    </section>
+  </main>
+
+  <footer class="app-footer z-10 flex-shrink-0">
+    <div class="px-6 py-3 text-center text-sm">{{ language.t('common.createdBy') }}</div>
+  </footer>
+</div>
