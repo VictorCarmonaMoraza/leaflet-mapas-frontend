@@ -1,0 +1,45 @@
+<div class="theme-picker">
+
+  <!-- Botón disparador -->
+  <button class="theme-btn" (click)="toggle()" [title]="language.t('common.theme') + ': ' + themeService.currentTheme()"
+    type="button">
+    <!-- Icono paleta -->
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+      <circle cx="12" cy="12" r="10" />
+      <circle cx="8.5" cy="10" r="1.5" fill="currentColor" stroke="none" />
+      <circle cx="15.5" cy="10" r="1.5" fill="currentColor" stroke="none" />
+      <circle cx="12" cy="15" r="1.5" fill="currentColor" stroke="none" />
+      <path d="M5.6 6.4C7 4.9 9.4 4 12 4s5 .9 6.4 2.4" />
+    </svg>
+    <span class="theme-btn__label">{{ language.t('common.theme') }}</span>
+    <svg class="theme-btn__chevron" [class.open]="open()" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2.5" width="12" height="12">
+      <polyline points="6 9 12 15 18 9" />
+    </svg>
+  </button>
+
+  <!-- Dropdown -->
+  @if (open()) {
+  <div class="theme-dropdown">
+    <p class="theme-dropdown__title">{{ language.t('common.theme') }}</p>
+    <ul class="theme-list">
+      @for (theme of themes; track theme.id) {
+      <li>
+        <button class="theme-option" [class.theme-option--active]="themeService.currentTheme() === theme.id"
+          (click)="select(theme.id)" type="button">
+          <span class="theme-swatch" [style.background]="theme.swatch"></span>
+          <span class="theme-option__label">{{ theme.label }}</span>
+          @if (themeService.currentTheme() === theme.id) {
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" width="14" height="14"
+            class="theme-option__check">
+            <polyline points="20 6 9 17 4 12" />
+          </svg>
+          }
+        </button>
+      </li>
+      }
+    </ul>
+  </div>
+  }
+
+</div>

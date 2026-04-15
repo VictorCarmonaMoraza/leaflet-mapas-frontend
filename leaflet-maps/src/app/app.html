@@ -1,0 +1,127 @@
+﻿<div class="w-full h-screen flex flex-col bg-gray-50 overflow-hidden">
+  <header class="bg-white shadow-md z-10 flex-shrink-0">
+    <div class="px-6 py-4">
+      <h1 class="text-3xl font-bold text-gray-900">{{ title() }}</h1>
+      <p class="text-gray-600 text-sm">Mapas Interactivos con Leaflet, Angular y Tailwind CSS</p>
+    </div>
+  </header>
+
+  <main class="flex-1 relative overflow-hidden">
+    <div class="absolute inset-0">
+      <app-map-viewer></app-map-viewer>
+    </div>
+
+    <div
+      class="absolute top-4 left-4 bg-white rounded-xl shadow-xl p-4 w-72 z-20 max-h-[calc(100vh-8rem)] overflow-y-auto">
+      <h2 class="text-base font-bold text-gray-900 mb-4">Controles</h2>
+
+      <div class="mb-4">
+        <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Buscar ciudad</p>
+        <div class="relative">
+          <input type="text" [ngModel]="searchQuery()" (ngModelChange)="onSearchInput($event)"
+            placeholder="Escribe una ciudad..."
+            class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 pr-8" />
+          @if (searchQuery()) {
+          <button (click)="limpiarBusqueda()"
+            class="absolute right-2 top-2 text-gray-400 hover:text-gray-600 text-sm leading-none">
+            ✕
+          </button>
+          }
+        </div>
+        @if (isSearching()) {
+        <p class="text-xs text-blue-500 mt-1 animate-pulse">Buscando...</p>
+        }
+        @if (searchError() && !isSearching()) {
+        <p class="text-xs text-red-500 mt-1">{{ searchError() }}</p>
+        }
+        @if (searchResults().length > 0) {
+        <ul class="mt-1 border border-gray-200 rounded-lg shadow-lg bg-white max-h-48 overflow-y-auto">
+          @for (result of searchResults(); track result.lat) {
+          <li (click)="seleccionarResultado(result)"
+            class="px-3 py-2 text-xs text-gray-700 hover:bg-blue-50 cursor-pointer border-b border-gray-100 last:border-b-0 truncate"
+            [title]="result.display_name">
+            📍 {{ result.display_name }}
+          </li>
+          }
+        </ul>
+        }
+      </div>
+
+      <div class="mb-4">
+        <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Zoom</p>
+        <div class="flex gap-2">
+          <button (click)="onZoomIn()"
+            class="flex-1 px-3 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg font-bold text-sm transition">+
+            Acercar</button>
+          <button (click)="onZoomOut()"
+            class="flex-1 px-3 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg font-bold text-sm transition">-
+            Alejar</button>
+        </div>
+      </div>
+
+      <div class="mb-4">
+        <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Ir a ciudad</p>
+        <div class="space-y-1">
+          <button (click)="goToMadrid()"
+            class="w-full px-3 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg text-sm font-medium transition">Madrid</button>
+          <button (click)="goToBarcelona()"
+            class="w-full px-3 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg text-sm font-medium transition">Barcelona</button>
+          <button (click)="goToValencia()"
+            class="w-full px-3 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg text-sm font-medium transition">Valencia</button>
+        </div>
+      </div>
+
+      @if (savedCities().length > 0) {
+      <div>
+        <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">
+          Mis notas ({{ savedCities().length }})
+        </p>
+        <div class="space-y-2">
+          @for (city of savedCities(); track city.name) {
+          <div (click)="irACiudadGuardada(city)"
+            class="bg-yellow-50 border border-yellow-200 rounded-lg p-2 cursor-pointer hover:bg-yellow-100 transition"
+            [title]="'Ir a ' + city.name">
+            <p class="text-xs font-semibold text-gray-800 truncate">📝 {{ city.name }}</p>
+            <p class="text-xs text-gray-500 mt-0.5 line-clamp-2">{{ city.comment }}</p>
+          </div>
+          }
+        </div>
+      </div>
+      }
+    </div>
+
+    @if (showModal() && modalCity()) {
+    <div class="absolute inset-0 bg-black/50 z-30 flex items-center justify-center p-4">
+      <div class="bg-white rounded-2xl shadow-2xl w-full max-w-sm p-6">
+        <div class="flex items-start justify-between mb-4">
+          <div>
+            <h3 class="text-lg font-bold text-gray-900">📍 {{ modalCity()!.name }}</h3>
+            <p class="text-sm text-gray-500 mt-0.5">¿Quieres añadir una nota a esta ubicación?</p>
+          </div>
+          <button (click)="cerrarModal()"
+            class="text-gray-400 hover:text-gray-600 text-2xl leading-none ml-4">×</button>
+        </div>
+
+        <textarea [ngModel]="modalComment()" (ngModelChange)="modalComment.set($event)"
+          placeholder="Escribe una nota... (opcional)" rows="4"
+          class="w-full border border-gray-300 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 resize-none"></textarea>
+
+        <div class="flex gap-2 mt-4">
+          <button (click)="cerrarModal()"
+            class="flex-1 px-3 py-2 border border-gray-300 text-gray-600 rounded-lg hover:bg-gray-50 text-sm transition">
+            Cancelar
+          </button>
+          <button (click)="soloMarcar()"
+            class="flex-1 px-3 py-2 bg-gray-500 hover:bg-gray-600 text-white rounded-lg text-sm transition">
+            Solo marcar
+          </button>
+          <button (click)="guardarConComentario()" [disabled]="!canSave()"
+            class="flex-1 px-3 py-2 bg-blue-500 hover:bg-blue-600 disabled:opacity-40 disabled:cursor-not-allowed text-white rounded-lg text-sm font-semibold transition">
+            Guardar nota
+          </button>
+        </div>
+      </div>
+    </div>
+    }
+  </main>
+</div>

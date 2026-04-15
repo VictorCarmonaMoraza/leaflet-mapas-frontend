@@ -1,0 +1,25 @@
+# Node
+node_modules/
+dist/
+.env
+# Angular
+.angular/
+coverage/
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.env
+.venv/
+venv/
+ENV/
+build/
+dist/
+.eggs/
+*.egg-info/
+# VSCode
+.vscode/
+# OS
+.DS_Store
+Thumbs.db

@@ -1,0 +1,95 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "town": "Aranda de Duero",
+        "name": "Red Principal Norte"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-3.6908, 41.673],
+          [-3.684, 41.6692],
+          [-3.6772, 41.6658]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "town": "Luarca",
+        "name": "Colector Oeste"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-6.5361, 43.5446],
+          [-6.5299, 43.5433],
+          [-6.5224, 43.5421]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "town": "Calatayud",
+        "name": "Tramo Industrial"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-1.6489, 41.355],
+          [-1.6417, 41.3521],
+          [-1.6331, 41.3493]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "town": "Ubeda",
+        "name": "Conduccion Este"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-3.3718, 38.0098],
+          [-3.3649, 38.0072],
+          [-3.3572, 38.0044]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "town": "Cangas de Onis",
+        "name": "Anillo Urbano"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-5.1275, 43.3494],
+          [-5.1203, 43.3469],
+          [-5.1135, 43.3448]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "town": "Mahón",
+        "name": "Impulsion Puerto"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [4.2561, 39.8892],
+          [4.2634, 39.8881],
+          [4.2718, 39.8867]
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,41 @@
+<div class="app-shell w-full min-h-dvh flex flex-col bg-gray-50">
+  <header class="app-navbar z-10 flex-shrink-0">
+    <div class="app-navbar__inner px-6 py-4 flex items-center justify-between gap-4">
+      <div class="app-navbar__brand">
+        <h1 class="text-3xl font-bold">{{ title() }}</h1>
+        <p class="text-sm">{{ language.t('argis.threeDDescription') }}</p>
+      </div>
+
+      <nav class="app-navbar__nav flex items-center gap-2">
+        <a routerLink="/home" class="nav-link nav-link--home" [title]="language.t('maps.backHomeTitle')">
+          {{ language.t('common.home') }}
+        </a>
+        <a routerLink="/maps" routerLinkActive="active-nav" class="nav-link">{{ language.t('common.maps') }}</a>
+        <a routerLink="/argis" routerLinkActive="active-nav" class="nav-link">{{ language.t('common.argis') }}</a>
+        <a routerLink="/argis/3d" routerLinkActive="active-nav" class="nav-link">{{ language.t('argis.view3d') }}</a>
+        <app-language-picker></app-language-picker>
+        <app-theme-picker></app-theme-picker>
+      </nav>
+    </div>
+  </header>
+
+  <main class="app-main flex-1 p-4 md:p-6">
+    <section class="app-panel bg-white rounded-xl shadow-xl border border-gray-200 p-4 h-full flex flex-col gap-4">
+      <div class="flex items-center justify-between gap-3 flex-wrap">
+        <p class="text-sm text-gray-600">{{ status() }}</p>
+        <a routerLink="/argis"
+          class="inline-flex items-center gap-2 px-4 py-2 bg-slate-700 hover:bg-slate-800 text-white rounded-lg text-sm font-semibold">
+          {{ language.t('argis.back2d') }}
+        </a>
+      </div>
+
+      <div class="map-wrapper flex-1 rounded-lg overflow-hidden border border-gray-200">
+        <div #argis3dMap class="map-canvas w-full h-full"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="app-footer z-10 flex-shrink-0">
+    <div class="px-6 py-3 text-center text-sm">{{ language.t('common.createdBy') }}</div>
+  </footer>
+</div>
