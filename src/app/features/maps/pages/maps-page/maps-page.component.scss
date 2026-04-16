@@ -56,6 +56,7 @@
 .control-panel {
 	width: min(22rem, calc(100vw - 2rem));
 	z-index: 1200;
+	max-height: calc(100% - 2rem);
 }
 
 .logout-btn {
@@ -233,6 +234,7 @@
 @media (max-width: 1024px) {
 	.control-panel {
 		width: min(20rem, calc(100vw - 2rem));
+		max-height: calc(100% - 2rem);
 	}
 }
 
@@ -290,7 +292,7 @@
 		left: auto;
 		order: 1;
 		width: 100%;
-		max-height: none;
+		max-height: min(40dvh, 24rem);
 	}
 
 	.app-modal {
@@ -350,6 +352,7 @@
 	.control-panel {
 		padding: 0.9rem;
 		border-radius: 0.9rem;
+		max-height: min(36dvh, 21rem);
 	}
 
 	.note-modal-card {
