@@ -2,14 +2,20 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-// Configuración de iconos de Leaflet para Angular
 import * as L from 'leaflet';
-// Usar los iconos desde public/media
-L.Icon.Default.mergeOptions({
-  iconRetinaUrl: './media/marker-icon-2x.png',
-  iconUrl: './media/marker-icon.png',
-  shadowUrl: './media/marker-shadow.png'
+
+const legacyMarkerIcon = L.icon({
+  iconRetinaUrl: '/media/marker-icon-2x.png',
+  iconUrl: '/media/marker-icon.png',
+  shadowUrl: '/media/marker-shadow.png',
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  tooltipAnchor: [16, -28],
+  shadowSize: [41, 41]
 });
+
+L.Marker.prototype.options.icon = legacyMarkerIcon;
 
 @Component({
   selector: 'app-map-viewer-legacy',

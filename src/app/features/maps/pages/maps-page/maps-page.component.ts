@@ -55,14 +55,10 @@ export class MapsPageComponent implements AfterViewInit, OnDestroy {
       const file = input.files[0];
       const reader = new FileReader();
       reader.onload = (e: any) => {
-        console.log('Evento change disparado, fichero leído'); // <-- Log para comprobar evento
-        debugger; // <-- Punto de parada: al recibir el fichero y antes de parsear
         try {
           const geojson = JSON.parse(e.target.result);
-          debugger; // <-- Punto de parada: tras parsear el GeoJSON
           if (this.mapViewer && typeof this.mapViewer.loadGeoJson === 'function') {
             this.mapViewer.loadGeoJson(geojson);
-            debugger; // <-- Punto de parada: tras llamar a loadGeoJson
           }
         } catch (err) {
           this.searchError.set('Archivo GeoJSON inválido.');
