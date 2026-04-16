@@ -33,6 +33,22 @@ export class MapsPageComponent implements AfterViewInit, OnDestroy {
 
   public onSearchInput(value: string): void {
     this.searchQuery.set(value);
+
+    if (this.searchTimeout) {
+      clearTimeout(this.searchTimeout);
+    }
+
+    const query = value.trim();
+    if (query.length < 2) {
+      this.searchResults.set([]);
+      this.searchError.set('');
+      this.isSearching.set(false);
+      return;
+    }
+
+    this.searchTimeout = setTimeout(() => {
+      void this.searchCities(query);
+    }, 350);
   }
 
   public limpiarBusqueda(): void {
@@ -42,8 +58,15 @@ export class MapsPageComponent implements AfterViewInit, OnDestroy {
   }
 
   public seleccionarResultado(result: any): void {
+    if (this.mapViewer) {
+      this.mapViewer.goToLocation(Number(result.lat), Number(result.lon));
+    }
     this.showModal.set(true);
-    this.modalCity.set({ name: result.display_name, lat: result.lat, lng: result.lng });
+    this.modalCity.set({
+      name: result.display_name,
+      lat: Number(result.lat),
+      lng: Number(result.lon ?? result.lng),
+    });
     this.resetModalPosition();
   }
 
@@ -113,9 +136,13 @@ export class MapsPageComponent implements AfterViewInit, OnDestroy {
       return this.modalPosition().y;
     }
   ngAfterViewInit(): void {
+    void this.loadSavedNotes();
   }
 
   ngOnDestroy(): void {
+    if (this.searchTimeout) {
+      clearTimeout(this.searchTimeout);
+    }
     this.detachModalDragListeners();
   }
   @ViewChild(MapViewerComponent) mapViewer!: MapViewerComponent;
@@ -277,6 +304,39 @@ export class MapsPageComponent implements AfterViewInit, OnDestroy {
         .forEach((note) => this.mapViewer.addMarkerWithComment(Number(note.lat), Number(note.lng), note.name, note.comment, note.id));
     } catch {
       this.notesError.set('No se pudieron cargar las notas guardadas.');
+    }
+  }
+
+  private async searchCities(query: string): Promise<void> {
+    this.isSearching.set(true);
+    this.searchError.set('');
+
+    try {
+      const params = new URLSearchParams({
+        q: query,
+        format: 'json',
+        limit: '5',
+        countrycodes: 'es',
+        lang: this.language.currentLanguage(),
+      });
+
+      const response = await fetch(apiUrl(`/api/geocode/search?${params.toString()}`));
+      if (!response.ok) {
+        throw new Error('search-failed');
+      }
+
+      const results = await response.json() as SearchResult[];
+      this.searchResults.set(results);
+
+      if (!results.length) {
+        this.searchError.set(this.language.t('maps.searchNoResults'));
+      }
+    } catch {
+      this.searchResults.set([]);
+      this.searchError.set(this.language.t('maps.searchError'));
+    } finally {
+      this.isSearching.set(false);
+      this.searchTimeout = null;
     }
   }
 

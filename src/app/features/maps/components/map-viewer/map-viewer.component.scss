@@ -31,5 +31,27 @@
     :deep(.leaflet-marker-icon) {
       filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
     }
+
+    :deep(.leaflet-note-marker-wrap) {
+      background: transparent;
+      border: none;
+      width: 40px !important;
+      height: 52px !important;
+    }
+
+    :deep(.leaflet-note-marker) {
+      width: 40px;
+      height: 52px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      filter: drop-shadow(0 10px 18px rgba(37, 99, 235, 0.28));
+    }
+
+    :deep(.leaflet-note-marker__svg) {
+      display: block;
+      width: 40px;
+      height: 52px;
+    }
   }
 }
