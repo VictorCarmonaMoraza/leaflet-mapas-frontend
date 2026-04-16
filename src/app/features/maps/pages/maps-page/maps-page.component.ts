@@ -24,11 +24,9 @@ export class MapsPageComponent implements AfterViewInit, OnDestroy {
   private authService = inject(AuthService);
   private router = inject(Router);
 
-  logout() {
+  async logout(): Promise<void> {
     this.authService.logout();
-    localStorage.clear();
-    sessionStorage.clear();
-    location.reload();
+    await this.router.navigateByUrl('/login');
   }
 
   public title = 'Mapas Interactivos';
