@@ -1,9 +1,19 @@
+import { AfterViewInit, Component, ElementRef, EventEmitter, Output, ViewChild } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import * as L from 'leaflet';
-(L.Icon.Default as any).mergeOptions({
+
+const defaultMarkerIcon = L.icon({
   iconRetinaUrl: '/media/marker-icon-2x.png',
   iconUrl: '/media/marker-icon.png',
-  shadowUrl: '/media/marker-shadow.png'
+  shadowUrl: '/media/marker-shadow.png',
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  tooltipAnchor: [16, -28],
+  shadowSize: [41, 41]
 });
+
+L.Marker.prototype.options.icon = defaultMarkerIcon;
 
 type PendingMarker = {
   lat: number;
@@ -189,22 +199,15 @@ export class MapViewerComponent implements AfterViewInit {
     });
   }
 
-  // Permite cargar y visualizar un objeto GeoJSON en el mapa
   public loadGeoJson(geojson: any): void {
-    debugger; // <-- Punto de parada: al entrar en loadGeoJson
     import('leaflet').then((L) => {
       if (!this.map) return;
-      // Limpia capas GeoJSON previas si es necesario
       if ((this as any)._geoJsonLayer) {
         this.map.removeLayer((this as any)._geoJsonLayer);
       }
       const geoJsonLayer = L.geoJSON(geojson).addTo(this.map);
       (this as any)._geoJsonLayer = geoJsonLayer;
-      // Ajusta el mapa para mostrar el GeoJSON
       this.map.fitBounds(geoJsonLayer.getBounds());
-      debugger; // <-- Punto de parada: tras añadir el GeoJSON al mapa
     });
   }
 }
-import { AfterViewInit, Component, ElementRef, EventEmitter, Output, ViewChild } from '@angular/core';
-import { CommonModule } from '@angular/common';
