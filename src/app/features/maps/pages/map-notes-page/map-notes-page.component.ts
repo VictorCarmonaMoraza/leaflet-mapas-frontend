@@ -347,6 +347,18 @@ import { SavedCity } from '../../models/maps.models';
     @media (max-width: 768px) {
       .app-navbar__inner {
         padding: 1rem;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+      }
+
+      .app-navbar__brand,
+      .app-navbar__nav {
+        width: 100%;
+      }
+
+      .app-navbar__nav {
+        justify-content: center;
       }
 
       .notes-hero {
@@ -356,6 +368,27 @@ import { SavedCity } from '../../models/maps.models';
 
       .back-button {
         width: 100%;
+      }
+    }
+
+    @media (max-width: 540px) {
+      .app-navbar__nav {
+        gap: 0.5rem;
+      }
+
+      .nav-link {
+        flex: 1 1 calc(50% - 0.5rem);
+        font-size: 0.78rem;
+        padding: 0.42rem 0.65rem;
+      }
+
+      .notes-main {
+        padding-left: 1rem;
+        padding-right: 1rem;
+      }
+
+      .note-card {
+        padding: 1rem;
       }
     }
   `]

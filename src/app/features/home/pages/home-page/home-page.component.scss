@@ -246,7 +246,10 @@ $accent2:   #f97316;
 @media (max-width: 540px) {
   .splash__language {
     top: 0.85rem;
+    left: 0.85rem;
     right: 0.85rem;
+    justify-content: flex-end;
+    flex-wrap: wrap;
   }
 
   .splash__icon {
@@ -257,6 +260,19 @@ $accent2:   #f97316;
 
   .splash__title {
     font-size: 2.1rem;
+  }
+
+  .splash__content {
+    padding: 1rem 0.5rem;
+  }
+
+  .dot {
+    &--1 { width: 180px; height: 180px; left: -60px; }
+    &--2 { width: 120px; height: 120px; right: -40px; }
+    &--3 { width: 90px; height: 90px; }
+    &--4,
+    &--5,
+    &--6 { display: none; }
   }
 
   .splash__actions {

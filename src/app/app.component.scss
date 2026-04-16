@@ -25,8 +25,8 @@ $accent: #38bdf8;
 
 .app-spinner {
 	position: relative;
-	width: 80px;
-	height: 80px;
+	width: clamp(64px, 16vw, 80px);
+	height: clamp(64px, 16vw, 80px);
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -61,8 +61,8 @@ $accent: #38bdf8;
 
 .spinner-globe {
 	position: relative;
-	width: 28px;
-	height: 28px;
+	width: clamp(22px, 6vw, 28px);
+	height: clamp(22px, 6vw, 28px);
 	color: $accent;
 	filter: drop-shadow(0 0 6px rgba($accent, 0.7));
 }
@@ -74,6 +74,19 @@ $accent: #38bdf8;
 	text-transform: uppercase;
 	margin: 0;
 	animation: blink 1.5s ease-in-out infinite;
+}
+
+@media (max-width: 540px) {
+	.app-loading-overlay {
+		padding: 1.25rem;
+		gap: 1rem;
+	}
+
+	.app-loading-text {
+		font-size: 0.72rem;
+		letter-spacing: 0.08em;
+		text-align: center;
+	}
 }
 
 @keyframes blink {

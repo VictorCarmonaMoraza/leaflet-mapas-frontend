@@ -198,13 +198,59 @@
   }
 }
 
+@media (max-width: 768px) {
+  .login-shell {
+    padding: 1rem;
+  }
+
+  .login-toolbar {
+    position: static;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    width: min(1220px, 95vw);
+    margin: 0 auto 1rem;
+  }
+
+  .login-layout {
+    width: min(100%, 680px);
+  }
+
+  .login-bg--a {
+    width: 18rem;
+    height: 18rem;
+    top: -6rem;
+    left: -5rem;
+  }
+
+  .login-bg--b {
+    width: 22rem;
+    height: 22rem;
+    right: -7rem;
+    bottom: -8rem;
+  }
+}
+
 @media (max-width: 520px) {
   .login-toolbar {
-    top: 0.7rem;
-    right: 0.7rem;
+    width: 100%;
+    justify-content: stretch;
   }
 
   .login-layout {
     width: 94vw;
+  }
+
+  .login-bg--a {
+    width: 13rem;
+    height: 13rem;
+    top: -4rem;
+    left: -4rem;
+  }
+
+  .login-bg--b {
+    width: 15rem;
+    height: 15rem;
+    right: -5rem;
+    bottom: -5rem;
   }
 }

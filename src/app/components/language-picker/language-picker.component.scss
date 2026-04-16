@@ -74,3 +74,19 @@
 .language-check {
   font-size: 0.8rem;
 }
+
+@media (max-width: 540px) {
+  :host {
+    width: 100%;
+  }
+
+  .language-btn {
+    width: 100%;
+  }
+
+  .language-dropdown {
+    left: 0;
+    right: 0;
+    min-width: 100%;
+  }
+}

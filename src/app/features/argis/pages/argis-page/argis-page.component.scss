@@ -20,7 +20,9 @@
 }
 
 .app-main {
-  display: block;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
   overflow-y: auto;
   overflow-x: hidden;
   height: 100%;
@@ -29,6 +31,8 @@
 .app-panel {
   display: flex;
   flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 0;
   gap: 1rem;
 }
 
@@ -40,10 +44,20 @@
   gap: 1rem;
 }
 
+@media (max-width: 1024px) {
+  .argis-content-grid {
+    grid-template-columns: minmax(0, 1fr) minmax(260px, 32vw);
+  }
+
+  .toolbar-actions > * {
+    min-width: 0;
+  }
+}
+
 .map-wrapper {
   flex: 1 1 auto;
-  height: clamp(520px, 74dvh, 900px);
-  min-height: 0;
+  height: 100%;
+  min-height: clamp(520px, 74dvh, 900px);
   position: relative;
 }
 
@@ -475,7 +489,9 @@
 @media (max-width: 768px) {
   .app-navbar__inner {
     padding: 1rem;
-    align-items: flex-start;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
   }
 
   .app-navbar__brand,
@@ -484,7 +500,12 @@
   }
 
   .app-navbar__nav {
-    justify-content: flex-start;
+    justify-content: center;
+  }
+
+  app-language-picker,
+  app-theme-picker {
+    width: 100%;
   }
 
   .app-navbar h1 {
@@ -514,6 +535,11 @@
     justify-content: center;
   }
 
+  .toolbar-row > p {
+    width: 100%;
+    text-align: center;
+  }
+
   .search-controls {
     flex-direction: column;
     align-items: stretch;
@@ -529,9 +555,23 @@
 }
 
 @media (max-width: 540px) {
+  .app-navbar__inner {
+    gap: 0.75rem;
+  }
+
+  .app-navbar__nav {
+    gap: 0.5rem;
+  }
+
+  app-language-picker,
+  app-theme-picker {
+    flex: 1 1 100%;
+  }
+
   .nav-link {
     font-size: 0.78rem;
     padding: 0.42rem 0.65rem;
+    flex: 1 1 calc(50% - 0.5rem);
   }
 
   .app-navbar p,
