@@ -1,8 +1,8 @@
 import * as L from 'leaflet';
 (L.Icon.Default as any).mergeOptions({
-  iconRetinaUrl: '/media/marker-icon-2x.png',
-  iconUrl: '/media/marker-icon.png',
-  shadowUrl: '/media/marker-shadow.png'
+  iconRetinaUrl: 'media/marker-icon-2x.png',
+  iconUrl: 'media/marker-icon.png',
+  shadowUrl: 'media/marker-shadow.png'
 });
 
 type PendingMarker = {

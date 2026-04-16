@@ -1,8 +1,8 @@
-import { Component, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
+import { Component, ViewChild, AfterViewInit, OnDestroy, signal, computed, inject } from '@angular/core';
+import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { signal, computed, inject } from '@angular/core';
 import { MapViewerComponent } from '../../components/map-viewer/map-viewer.component';
 import { MapLayer, ModalCity, SavedCity, SearchResult } from '../../models/maps.models';
 import { ThemePickerComponent } from '../../../../components/theme-picker/theme-picker.component';
@@ -20,74 +20,86 @@ import { apiUrl } from '../../../../config/api.config';
 })
 
 export class MapsPageComponent implements AfterViewInit, OnDestroy {
+  public language = inject(LanguageService);
+  private authService = inject(AuthService);
+  private router = inject(Router);
 
-    public title = 'Mapas Interactivos';
+  logout() {
+    this.authService.logout();
+    localStorage.clear();
+    sessionStorage.clear();
+    location.reload();
+  }
 
-    public onSearchInput(value: string): void {
-      this.searchQuery.set(value);
-    }
+  public title = 'Mapas Interactivos';
 
-    public limpiarBusqueda(): void {
-      this.searchQuery.set('');
-      this.searchResults.set([]);
-      this.searchError.set('');
-    }
+  public onSearchInput(value: string): void {
+    this.searchQuery.set(value);
+  }
 
-    public seleccionarResultado(result: any): void {
-      this.showModal.set(true);
-      this.modalCity.set({ name: result.display_name, lat: result.lat, lng: result.lng });
-      this.resetModalPosition();
-    }
+  public limpiarBusqueda(): void {
+    this.searchQuery.set('');
+    this.searchResults.set([]);
+    this.searchError.set('');
+  }
 
-    public onGeoJsonFileSelected(event: Event): void {
-      const input = event.target as HTMLInputElement;
-      if (input && input.files && input.files.length > 0) {
-        const file = input.files[0];
-        const reader = new FileReader();
-        reader.onload = (e: any) => {
-          console.log('Evento change disparado, fichero leído'); // <-- Log para comprobar evento
-          debugger; // <-- Punto de parada: al recibir el fichero y antes de parsear
-          try {
-            const geojson = JSON.parse(e.target.result);
-            debugger; // <-- Punto de parada: tras parsear el GeoJSON
-            if (this.mapViewer && typeof this.mapViewer.loadGeoJson === 'function') {
-              this.mapViewer.loadGeoJson(geojson);
-              debugger; // <-- Punto de parada: tras llamar a loadGeoJson
-            }
-          } catch (err) {
-            this.searchError.set('Archivo GeoJSON inválido.');
+  public seleccionarResultado(result: any): void {
+    this.showModal.set(true);
+    this.modalCity.set({ name: result.display_name, lat: result.lat, lng: result.lng });
+    this.resetModalPosition();
+  }
+
+  public onGeoJsonFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input && input.files && input.files.length > 0) {
+      const file = input.files[0];
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        console.log('Evento change disparado, fichero leído'); // <-- Log para comprobar evento
+        debugger; // <-- Punto de parada: al recibir el fichero y antes de parsear
+        try {
+          const geojson = JSON.parse(e.target.result);
+          debugger; // <-- Punto de parada: tras parsear el GeoJSON
+          if (this.mapViewer && typeof this.mapViewer.loadGeoJson === 'function') {
+            this.mapViewer.loadGeoJson(geojson);
+            debugger; // <-- Punto de parada: tras llamar a loadGeoJson
           }
-        };
-        reader.readAsText(file);
-      }
+        } catch (err) {
+          this.searchError.set('Archivo GeoJSON inválido.');
+        }
+      };
+      reader.readAsText(file);
     }
+  }
 
-    public onZoomIn(): void {
-      if (this.mapViewer) this.mapViewer.zoomIn();
+  public onZoomIn(): void {
+    if (this.mapViewer) this.mapViewer.zoomIn();
+  }
+
+  public onZoomOut(): void {
+    if (this.mapViewer) this.mapViewer.zoomOut();
+  }
+
+  public toggleLayerPanel(): void {
+    this.showLayerPanel.set(!this.showLayerPanel());
+  }
+
+  public setLayer(layer: MapLayer): void {
+    this.selectedLayer.set(layer);
+    if (this.mapViewer) {
+      this.mapViewer.setBaseLayer(layer);
     }
+  }
 
-    public onZoomOut(): void {
-      if (this.mapViewer) this.mapViewer.zoomOut();
-    }
+  public goToMadrid(): void {
+    if (this.mapViewer) this.mapViewer.goToLocation(40.4168, -3.7038);
+  }
 
-    public toggleLayerPanel(): void {
-      this.showLayerPanel.set(!this.showLayerPanel());
-    }
+  public goToBarcelona(): void {
+    if (this.mapViewer) this.mapViewer.goToLocation(41.3874, 2.1686);
+  }
 
-    public setLayer(layer: string): void {
-      this.selectedLayer.set(layer as any);
-      this.showLayerPanel.set(false);
-    }
-
-    public goToMadrid(): void {
-      if (this.mapViewer) this.mapViewer.goToLocation(40.4168, -3.7038);
-    }
-
-    public goToBarcelona(): void {
-      if (this.mapViewer) this.mapViewer.goToLocation(41.3874, 2.1686);
-    }
-
-    public goToValencia(): void {
+  public goToValencia(): void {
       if (this.mapViewer) this.mapViewer.goToLocation(39.4699, -0.3763);
     }
 
@@ -113,7 +125,6 @@ export class MapsPageComponent implements AfterViewInit, OnDestroy {
     this.detachModalDragListeners();
   }
   @ViewChild(MapViewerComponent) mapViewer!: MapViewerComponent;
-  readonly language = inject(LanguageService);
   readonly auth = inject(AuthService);
 
   readonly searchQuery = signal('');
