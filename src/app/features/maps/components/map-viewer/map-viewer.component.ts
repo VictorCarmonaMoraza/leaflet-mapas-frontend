@@ -19,13 +19,13 @@ const noteMarkerIcon = L.divIcon({
     <svg viewBox="0 0 48 48" class="leaflet-note-marker__svg" focusable="false">
       <defs>
         <linearGradient id="note-pin-gradient" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stop-color="#2563eb" />
-          <stop offset="100%" stop-color="#1d4ed8" />
+          <stop offset="0%" stop-color="#facc15" />
+          <stop offset="100%" stop-color="#eab308" />
         </linearGradient>
       </defs>
       <path d="M24 3C15.44 3 8.5 9.94 8.5 18.5c0 11.79 13.4 24.48 14.38 25.4a1.67 1.67 0 0 0 2.24 0c.98-.92 14.38-13.61 14.38-25.4C39.5 9.94 32.56 3 24 3Z" fill="url(#note-pin-gradient)"/>
       <circle cx="24" cy="18" r="9" fill="#ffffff"/>
-      <path d="M20 14.75h8a1.25 1.25 0 0 1 1.25 1.25v7.2a1.05 1.05 0 0 1-1.05 1.05H19.8a1.05 1.05 0 0 1-1.05-1.05V16A1.25 1.25 0 0 1 20 14.75Z" fill="#1d4ed8"/>
+      <path d="M20 14.75h8a1.25 1.25 0 0 1 1.25 1.25v7.2a1.05 1.05 0 0 1-1.05 1.05H19.8a1.05 1.05 0 0 1-1.05-1.05V16A1.25 1.25 0 0 1 20 14.75Z" fill="#a16207"/>
       <path d="M21.25 18h5.5M21.25 20.7h5.5M21.25 23.4h3.6" stroke="#ffffff" stroke-width="1.6" stroke-linecap="round"/>
     </svg>
   </div>`,

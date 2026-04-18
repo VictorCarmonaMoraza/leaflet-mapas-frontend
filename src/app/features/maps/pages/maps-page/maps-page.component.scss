@@ -292,7 +292,8 @@
 		left: auto;
 		order: 1;
 		width: 100%;
-		max-height: min(40dvh, 24rem);
+		max-height: none;
+		padding: 0.95rem;
 	}
 
 	.app-modal {
@@ -352,7 +353,11 @@
 	.control-panel {
 		padding: 0.9rem;
 		border-radius: 0.9rem;
-		max-height: min(36dvh, 21rem);
+		max-height: none;
+	}
+
+	.control-panel h2 {
+		margin-bottom: 0.85rem;
 	}
 
 	.note-modal-card {
